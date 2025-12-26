@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1f2937; /* or bg-neutral from Tailwind (dark tone) */
+  color: #e5e7eb;
+}
