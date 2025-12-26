@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import axios from "../utils/axios";
+import { BASE_URL } from "../utils/constants"; // Keeping BASE_URL for socket connection logic if needed (wait, socket handles it)
 
 const formatTime = (isoString) => {
   const date = new Date(isoString);
@@ -20,9 +20,7 @@ const Chat = () => {
   const socketRef = useRef(null);
 
   const fetchChatMessages = async () => {
-    const chat = await axios.get(BASE_URL + "/api/chat/" + targetUserId, {
-      withCredentials: true,
-    });
+    const chat = await axios.get("/api/chat/" + targetUserId);
 
     const chatMessages = chat?.data?.messages.map((msg) => {
       const { senderId, text, createdAt } = msg;
@@ -115,11 +113,10 @@ const Chat = () => {
                   )}
                 </div>
                 <div
-                  className={`chat-bubble ${
-                    isSelf
-                      ? "bg-gradient-to-r from-primary to-secondary text-white"
-                      : "bg-base-300 text-base-content"
-                  } rounded-2xl text-sm px-4 py-2`}
+                  className={`chat-bubble ${isSelf
+                    ? "bg-gradient-to-r from-primary to-secondary text-white"
+                    : "bg-base-300 text-base-content"
+                    } rounded-2xl text-sm px-4 py-2`}
                 >
                   {msg.text}
                 </div>

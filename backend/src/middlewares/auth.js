@@ -4,11 +4,12 @@ const User = require("../models/user");
 const userAuth = async (req, res, next) => {
   try {
     // Get token directly without destructuring
-    const token = req.cookies.token;
-
-    if (!token) {
-      return res.status(401).send("Please Login or Signup");
+    // Get token from Authorization Header (Bearer <token>)
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).send("Please Login (Token missing)");
     }
+    const token = authHeader.split(" ")[1];
 
     // jwt.verify is synchronous
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

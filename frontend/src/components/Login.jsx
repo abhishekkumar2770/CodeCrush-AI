@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../utils/axios";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -36,11 +36,11 @@ const Login = () => {
     setError("");
     try {
       const res = await axios.post(
-        BASE_URL + "/login",
-        { emailId, password },
-        { withCredentials: true }
+        "/login",
+        { emailId, password }
       );
-      dispatch(addUser(res.data.user));
+      localStorage.setItem("token", res.data.token); // ✅ Store token
+      dispatch(addUser(res.data.user)); // ✅ Corrected structure
       navigate("/feed");
     } catch (err) {
       setError(err.response?.data || "Login failed");
@@ -52,10 +52,10 @@ const Login = () => {
     setError("");
     try {
       const res = await axios.post(
-        BASE_URL + "/signup",
-        { firstName, lastName, emailId, password },
-        { withCredentials: true }
+        "/signup",
+        { firstName, lastName, emailId, password }
       );
+      localStorage.setItem("token", res.data.token); // ✅ Store token
       dispatch(addUser(res.data.data));
       navigate("/profile");
     } catch (err) {

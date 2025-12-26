@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../utils/constants";
 
@@ -9,9 +9,7 @@ const SmartMatches = () => {
 
   const fetchSmartMatches = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/api/smart-matches", {
-        withCredentials: true,
-      });
+      const res = await axios.get("/api/smart-matches");
       setMatches(res.data.matches || []);
     } catch (err) {
       console.error("Error fetching smart matches:", err);
@@ -23,9 +21,8 @@ const SmartMatches = () => {
   const handleInterest = async (targetId) => {
     try {
       await axios.post(
-        `${BASE_URL}/request/send/interested/${targetId}`,
-        {},
-        { withCredentials: true }
+        `/request/send/interested/${targetId}`,
+        {}
       );
       toast.success("You showed interest! 🤝");
       setMatches((prev) => prev.filter((m) => m.user._id !== targetId));
@@ -38,9 +35,8 @@ const SmartMatches = () => {
   const handleIgnore = async (targetId) => {
     try {
       await axios.post(
-        `${BASE_URL}/request/send/ignored/${targetId}`,
-        {},
-        { withCredentials: true }
+        `/request/send/ignored/${targetId}`,
+        {}
       );
       toast("Ignored successfully 🚫", { icon: "❌" });
       setMatches((prev) => prev.filter((m) => m.user._id !== targetId));

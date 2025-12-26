@@ -41,15 +41,10 @@ authRouter.post("/signup", async (req, res) => {
     });
     const savedUser = await user.save();
     const token = await savedUser.getjwt();
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    // Cookie removed - User must store token in LS
     res
       .status(200)
-      .json({ message: "User added successfully", data: savedUser });
+      .json({ message: "User added successfully", data: savedUser, token });
   } catch (err) {
     res.status(400).send("ERROR:" + err.message);
   }
@@ -68,13 +63,8 @@ authRouter.post("/login", async (req, res) => {
     const isValidPassword = await user.validatePassword(password);
     if (isValidPassword) {
       const token = await user.getjwt();
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-      res.status(200).json({ user });
+      // Cookie removed - User must store token in LS
+      res.status(200).json({ user, token });
     } else {
       throw new Error("Invalid Credentials");
     }
@@ -84,14 +74,7 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", async (req, res) => {
-  res
-    .cookie("token", null, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 0,
-    })
-    .send("User Logged out successfully");
+  res.status(200).send("User Logged out successfully");
 });
 
 module.exports = authRouter;

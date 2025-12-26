@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import axios from "./utils/axios";
 
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -30,9 +30,7 @@ function App() {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const res = await axios.get(BASE_URL + "/profile/view", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/profile/view");
         dispatch(addUser(res.data)); // store user in Redux
       } catch (err) {
         console.log("User not logged in or session expired");

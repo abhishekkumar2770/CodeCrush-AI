@@ -78,7 +78,6 @@ app.use(
       "https://code-crush-ai.vercel.app",
       "https://code-crush-6d5te5z9h-abhishekk27033-2463s-projects.vercel.app",
     ],
-    credentials: true,
   })
 );
 

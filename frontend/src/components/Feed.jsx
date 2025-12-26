@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../utils/axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +12,7 @@ const Feed = () => {
   const getFeed = async () => {
     if (feed) return;
     try {
-      const res = await axios.get(BASE_URL + "/user/feed", {
-        withCredentials: true,
-      });
+      const res = await axios.get("/user/feed");
       dispatch(addFeed(res.data));
     } catch (err) {
       console.log(err);
@@ -45,9 +43,8 @@ const Feed = () => {
             return (
               <div
                 key={user._id}
-                className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ease-in-out ${
-                  isTop ? "z-30" : "z-10 pointer-events-none"
-                }`}
+                className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ease-in-out ${isTop ? "z-30" : "z-10 pointer-events-none"
+                  }`}
                 style={{
                   transform: `scale(${scale}) translateY(${offset}px)`,
                   filter: `blur(${blur}px)`,

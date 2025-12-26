@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { BASE_URL } from "../utils/constants";
 
 const AIAssistant = () => {
@@ -12,9 +12,8 @@ const AIAssistant = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${BASE_URL}/api/ai-assistant`,
-        { message },
-        { withCredentials: true }
+        `/api/ai-assistant`,
+        { message }
       );
       setReply(res.data.reply || "No response from DevBuddy.");
     } catch (err) {

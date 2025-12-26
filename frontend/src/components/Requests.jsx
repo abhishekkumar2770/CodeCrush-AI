@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../utils/axios";
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,9 +13,8 @@ const Requests = () => {
   const reviewRequest = async (status, _id) => {
     try {
       await axios.post(
-        `${BASE_URL}/request/review/${status}/${_id}`,
-        {},
-        { withCredentials: true }
+        `/request/review/${status}/${_id}`,
+        {}
       );
       setToastMsg(`Request ${status} successfully!`);
       setAcceptedIds((prev) => [...prev, _id]);
@@ -30,9 +29,7 @@ const Requests = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/user/requests/recieved`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(`/user/requests/recieved`);
       dispatch(addRequests(res.data.connectionRequests));
     } catch (error) {
       console.log(error);
@@ -87,9 +84,8 @@ const Requests = () => {
           return (
             <div
               key={_id}
-              className={`flex flex-col md:flex-row items-start md:items-center gap-4 bg-base-200 border border-base-300 rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 ease-in-out ${
-                isFading ? "opacity-0 scale-95" : "opacity-100"
-              }`}
+              className={`flex flex-col md:flex-row items-start md:items-center gap-4 bg-base-200 border border-base-300 rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 ease-in-out ${isFading ? "opacity-0 scale-95" : "opacity-100"
+                }`}
             >
               <img
                 alt="photo"

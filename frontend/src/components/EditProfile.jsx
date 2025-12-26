@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UserCard from "./UserCard";
-import axios from "axios";
+import axios from "../utils/axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -21,9 +21,8 @@ const EditProfile = ({ user }) => {
     setError("");
     try {
       const res = await axios.post(
-        BASE_URL + "/profile/edit",
-        { firstName, lastName, photoURL, age, gender, about, skills },
-        { withCredentials: true }
+        "/profile/edit",
+        { firstName, lastName, photoURL, age, gender, about, skills }
       );
       dispatch(addUser(res.data.data));
       setShowToast(true);
