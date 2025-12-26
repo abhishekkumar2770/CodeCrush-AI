@@ -67,6 +67,9 @@ dotenv.config();
 
 const app = express();
 
+// ✅ Trust Proxy for Render (Required for Secure Cookies)
+app.set("trust proxy", 1);
+
 // ✅ CORS
 // ✅ CORS
 const allowedOrigins = [
