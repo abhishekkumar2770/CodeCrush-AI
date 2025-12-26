@@ -2,4 +2,4 @@
 // export const BASE_URL = "http://localhost:3000";
 
 //for development, you can use the following line
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://codecrush-ai.onrender.com';
