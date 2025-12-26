@@ -80,9 +80,13 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+      // Allow localhost and any Vercel deployment (preview or production)
+      const allowedRegex = /^https:\/\/.*\.vercel\.app$/;
+
+      if (allowedOrigins.includes(origin) || allowedRegex.test(origin)) {
         callback(null, true);
       } else {
+        console.error("CORS Blocked:", origin); // Log blocked origin for debugging
         callback(new Error("Not allowed by CORS"));
       }
     },
