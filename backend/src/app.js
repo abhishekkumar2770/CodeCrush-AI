@@ -74,10 +74,17 @@ app.set("trust proxy", 1);
 // ✅ CORS
 app.use(
   cors({
-    origin: [
-      "https://code-crush-ai.vercel.app",
-      "https://code-crush-6d5te5z9h-abhishekk27033-2463s-projects.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "https://code-crush-ai.vercel.app",
+        "http://localhost:5173",
+      ];
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
