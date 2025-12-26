@@ -74,7 +74,10 @@ app.set("trust proxy", 1);
 // ✅ CORS
 app.use(
   cors({
-    origin: "https://code-crush-ai.vercel.app",
+    origin: [
+      "https://code-crush-ai.vercel.app",
+      "https://code-crush-6d5te5z9h-abhishekk27033-2463s-projects.vercel.app",
+    ],
     credentials: true,
   })
 );
